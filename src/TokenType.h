@@ -4,7 +4,7 @@
 #include<string>
 #include<iostream>
 
-namespace cpplox:Types {
+namespace cpplox::Types {
     enum class TokenType {
         // Single-character tokens
         LEFT_PAREN,
@@ -38,5 +38,14 @@ namespace cpplox:Types {
         AND, CLASS, ELSE, FALSE, FUN, FOR, IF, NIL, OR,
         PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE,
 
-    }
+    };
+
+    class Token {
+        public:
+            Token(TokenType p_type, const char* p_lexeme); 
+        private:
+            const TokenType type;
+            const std::string lexeme;
+    };
 }
+#endif

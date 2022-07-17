@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": true,
+      "externalConsole": false,
+      "cwd": "${workspaceFolder}/src",
+      "program": "${workspaceFolder}/bazel-bin/src/cpplox",
+      "MIMode": "gdb",
+      "preLaunchTask": "build",
+      "sourceFileMap": {
+        "/proc/self/cwd" : "${workspaceFolder}"
+      }
+    }
+    
+  ]
+}
