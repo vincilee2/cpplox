@@ -4,20 +4,6 @@ cc_binary(
     name = "cpplox",
     srcs = ["main.cpp"],
     deps = [
-        ":token_type_lib",
-        ":interpreter-driver",
+        "//src/InterpreterDriver:interpreter-driver",
     ],
-)
-
-cc_library(
-    name = "token_type_lib",
-    srcs = ["TokenType.cpp"],
-    hdrs = ["TokenType.h"],
-)
-
-cc_library(
-    name = "interpreter-driver",
-    srcs = ["InterpreterDriver.cpp"],
-    hdrs = ["InterpreterDriver.h"],
-    deps = [":token_type_lib"],
 )

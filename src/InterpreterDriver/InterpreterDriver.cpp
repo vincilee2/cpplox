@@ -9,7 +9,7 @@
 #include <sstream>
 #include <string>
 
-#include "TokenType.h"
+#include "src/Types/Token.h"
 
 namespace cpplox {
     using Types::TokenType;

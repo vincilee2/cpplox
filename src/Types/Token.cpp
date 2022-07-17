@@ -1,4 +1,4 @@
-#include "TokenType.h"
+#include "Token.h"
 #include <map>
 #include <string>
 namespace cpplox::Types {
