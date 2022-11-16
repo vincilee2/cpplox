@@ -14,8 +14,19 @@ namespace cpplox::Types {
         };
     }
 
-    Token::Token(TokenType p_type, const char* p_lexeme)
+    Token::Token(TokenType p_type, std::string p_lexeme)
         : type(p_type),
-        lexeme(p_lexeme) {TokenTypeString(TokenType::AND);}
+        lexeme(p_lexeme) {}
     
+    Token::Token(TokenType p_type, std::string p_lexeme, const char* p_literal, int p_line)
+        : type(p_type),
+        lexeme(p_lexeme),
+        literal(p_literal),
+        line(p_line) {}
+
+    auto Token::toString() const -> std::string {
+        std::string result
+            = std::to_string(line) + " " + TokenTypeString(type) + " " + lexeme + " ";
+        return result;
+    }
 }

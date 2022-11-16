@@ -8,5 +8,6 @@ cc_library(
     hdrs = ["InterpreterDriver.h"],
     deps = [
         "//src/Types:types",
+        "//src/Scanner:scanner"
     ],
 )

@@ -43,10 +43,14 @@ namespace cpplox::Types {
 
     class Token {
         public:
-            Token(TokenType p_type, const char* p_lexeme); 
+            Token(TokenType p_type, std::string p_lexeme);
+            Token(TokenType p_type, std::string p_lexeme, const char* p_literal, int p_line);
+            [[nodiscard]] auto toString() const -> std::string;
         private:
             const TokenType type;
             const std::string lexeme;
+            const int line = -1;
+            const std::string literal;
     };
 }
 #endif

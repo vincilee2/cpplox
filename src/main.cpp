@@ -4,6 +4,6 @@
 
 auto main(int argc, char const* argv[]) -> int {
     cpplox::InterpreterDriver interpreter;
-    interpreter.runREPL();
+    interpreter.runPrompt();
     return 0;
 }

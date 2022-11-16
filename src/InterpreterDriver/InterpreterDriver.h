@@ -8,7 +8,9 @@ namespace cpplox {
     struct InterpreterDriver {
         public:
             InterpreterDriver();
-            void runREPL();
+            // interactive prompt
+            void runPrompt();
+            auto runScript(const char* script) -> int;
         private:
             void interpret(const std::string& source);
             //Evaluator::Evaluator evaluator;
