@@ -1,5 +1,5 @@
 ## Background
-Following Nystrom's book Crafting Interpreters, implemented in C++.
+Following Nystrom's book [Crafting Interpreters](http://www.craftinginterpreters.com/), implemented in C++.
 
 ## Build
 ```
