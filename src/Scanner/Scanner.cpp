@@ -18,8 +18,14 @@ namespace cpplox {
 
         auto ReservedOrIdentifier(const string& str) -> TokenType {
             static const map<string, TokenType> lookUpTable {
-                {"var", TokenType::VAR},
-            };
+                {"and", TokenType::AND},       {"class", TokenType::CLASS},
+                {"else", TokenType::ELSE},     {"false", TokenType::FALSE},
+                {"fun", TokenType::FUN},       {"for", TokenType::FOR},
+                {"if", TokenType::IF},         {"nil", TokenType::NIL},
+                {"or", TokenType::OR},         {"print", TokenType::PRINT},
+                {"return", TokenType::RETURN}, {"super", TokenType::SUPER},
+                {"this", TokenType::THIS},     {"true", TokenType::TRUE},
+                {"var", TokenType::VAR},       {"while", TokenType::WHILE}};
             auto iter = lookUpTable.find(str);
             if (iter == lookUpTable.end()) {
                 return TokenType::IDENTIFIER;
@@ -37,11 +43,16 @@ namespace cpplox {
 
     void Scanner::addToken(TokenType t) {
         string lexeme = getLexeme(source, start, current - start);
-        tokens.emplace_back(t, lexeme);
+        tokens.emplace_back(t, lexeme, lexeme, line);
     }
 
     void Scanner::advance() { ++current; }
 
+    auto Scanner::matchNext(char expetecd) -> bool {
+        bool nextMatches = (peek() == expetecd);
+        if (nextMatches) advance();
+        return nextMatches;
+    }
     auto Scanner::isAtEnd() -> bool { return current >= source.size(); }
 
     auto Scanner::peek() -> char {
@@ -71,6 +82,34 @@ namespace cpplox {
         char c = peek();
         advance();
         switch (c) {
+            case '(': addToken(TokenType::LEFT_PAREN); break;
+            case ')': addToken(TokenType::RIGHT_PAREN); break;
+            case '{': addToken(TokenType::LEFT_BRACE); break;
+            case '}': addToken(TokenType::RIGHT_BRACE); break;
+            case ',': addToken(TokenType::COMMA); break;
+            case '.': addToken(TokenType::DOT); break;
+            case ';': addToken(TokenType::SEMICOLON); break;
+            case '*': addToken(TokenType::STAR); break; 
+            case '!': 
+                addToken(matchNext('=') ? TokenType::BANG_EQUAL : TokenType::BANG); 
+                break;
+            case '=':
+                addToken(matchNext('=') ? TokenType::EQUAL_EQUAL : TokenType::EQUAL);
+                break;
+            case '>':
+                addToken(matchNext('=') ? TokenType::GREATER_EQUAL : TokenType::GREATER);
+                break;
+            case '<':
+                addToken(matchNext('=') ? TokenType::LESS_EQUAL : TokenType::LESS);
+                break;
+            case '-':
+                addToken(matchNext('-') ? TokenType::MINUS_MINUS : TokenType::MINUS);
+                break;
+            case '+':
+                addToken(matchNext('+') ? TokenType::PLUS_PLUS : TokenType::PLUS);
+                break;
+            // todo support comments
+
             case ' ':
             case '\t':
             case '\r': break;
@@ -85,7 +124,8 @@ namespace cpplox {
                     addToken(ReservedOrIdentifier(identifier));
                 } else {
                     string message = "Unexpected character: ";
-                    message.append(1, static_cast<char>(c));
+                    message.append(line, static_cast<char>(c));
+                    std::cout << message << std::endl;
                 }
                 break;
         }
@@ -96,7 +136,7 @@ namespace cpplox {
             start = current;
             tokenizeOne();
         }
-        tokens.emplace_back(TokenType::LOX_EOF, "");
+        tokens.emplace_back(TokenType::LOX_EOF, "", "", line);
         vector<Token> tokenVec;
         move(tokens.begin(), tokens.end(), back_inserter(tokenVec));
         return tokenVec;

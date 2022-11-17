@@ -1,7 +1,6 @@
 #ifndef TOKEN_TYPE_HPP
 #define TOKEN_TYPE_HPP
 
-#include<string>
 #include<iostream>
 
 namespace cpplox::Types {
@@ -28,6 +27,10 @@ namespace cpplox::Types {
         GREATER_EQUAL,
         LESS,
         LESS_EQUAL,
+        MINUS,
+        MINUS_MINUS,
+        PLUS,
+        PLUS_PLUS,
 
         // Literals
         IDENTIFIER,
@@ -44,13 +47,13 @@ namespace cpplox::Types {
     class Token {
         public:
             Token(TokenType p_type, std::string p_lexeme);
-            Token(TokenType p_type, std::string p_lexeme, const char* p_literal, int p_line);
+            Token(TokenType p_type, std::string p_lexeme, std::string p_literal, int p_line);
             [[nodiscard]] auto toString() const -> std::string;
         private:
             const TokenType type;
             const std::string lexeme;
-            const int line = -1;
             const std::string literal;
+            const int line = -1;
     };
 }
 #endif
